@@ -39,16 +39,18 @@ pipeline {
 		        	steps {
 		        	    echo "deploy-to-staging"
 		        	}
-	                success{
-	                    echo "build ${BUILD_NUMBER} was deployed to stagging."
-	        	        mail to:"thiaggom@gmail.com", 
-	        	        subject:"${currentBuild.fullDisplayName}", 
-	        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."
-	                }
-	                
-	                failure{
-	                    echo "build ${BUILD_NUMBER} was completed with erros. Check the build logs"
-	                }
+		        	post{
+		                success{
+		                    echo "build ${BUILD_NUMBER} was deployed to stagging."
+		        	        mail to:"thiaggom@gmail.com", 
+		        	        subject:"${currentBuild.fullDisplayName}", 
+		        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."
+		                }
+		                
+		                failure{
+		                    echo "build ${BUILD_NUMBER} was completed with erros. Check the build logs"
+		                }
+		        	}
 				                     
 				}
 				
