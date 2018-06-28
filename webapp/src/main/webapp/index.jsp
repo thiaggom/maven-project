@@ -1,5 +1,5 @@
 Hello, World! 
 
-The Script Pipeline was successfully built!
+new version deployed!
 
 Version 2.0
