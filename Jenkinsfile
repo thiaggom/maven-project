@@ -37,7 +37,7 @@ pipeline {
 			parallel{
 				stage("Deploy to Stagging") {
 		        	steps {
-		        	    echo: "deploy-to-staging"
+		        	    echo "deploy-to-staging"
 		        	}
 	                success{
 	                    echo "build ${BUILD_NUMBER} was deployed to stagging."
