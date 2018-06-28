@@ -16,6 +16,15 @@ pipeline {
         	    build job: "deploy-to-staging"
         	    
         	}
+        	
+        	post {
+        	    
+        	    always {
+        	        mail to:"thiaggom@gmail.com"  
+        	    }
+
+        	}
+
                           
         }
 
@@ -41,6 +50,9 @@ pipeline {
 			        echo "Deploy failed!"
 			    }
 			    
+        	    always {
+        	        mail to:"thiaggom@gmail.com"  
+        	    }
 			}
 		                     
 		}
