@@ -20,9 +20,10 @@ pipeline {
         	post {
         	    
         	    success {
-        	        mail to:"thiaggom@gmail.com", 
-        	        subject:"${currentBuild.fullDisplayName}", 
-        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."  
+//        	        mail to:"thiaggom@gmail.com", 
+//        	        subject:"${currentBuild.fullDisplayName}", 
+//        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."
+					echo "Deploy to staging server finished successfully!"  
         	    }
 
         	}
@@ -45,9 +46,10 @@ pipeline {
 			post {
 			    
         	    success {
-        	        mail to:"thiaggom@gmail.com", 
-        	        subject:"${currentBuild.fullDisplayName}", 
-        	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"  
+//        	        mail to:"thiaggom@gmail.com", 
+//        	        subject:"${currentBuild.fullDisplayName}", 
+ //       	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
+ 					echo "deploy successfully!"  
         	    }
 			    
 			    failure{
