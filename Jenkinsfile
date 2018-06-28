@@ -2,19 +2,18 @@ pipeline {
     
     agent any
     
+	parameters{
+	    
+	    string(name: "homol-server", defaultValue: "tomcat-homol", description: "stagging environment to deploy java web application")
+	    string(name: "prod-server", defaultValue: "tomcat-prod", description: "production environment to deploy java web application")
+	    
+	}
+
+	triggers{
+	    pollSCM("* * * * *")
+	}
+
     stages {
-    
-    	parameters{
-    	    
-    	    string(name: "homol-server", defaultValue: "tomcat-homol", description: "stagging environment to deploy java web application")
-    	    string(name: "prod-server", defaultValue: "tomcat-prod", description: "production environment to deploy java web application")
-    	    
-    	}
-
-    	triggers{
-    	    pollSCM("* * * * *")
-    	}
-
     
         stage("build") {
             steps{
