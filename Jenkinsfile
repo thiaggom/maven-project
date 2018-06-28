@@ -19,8 +19,10 @@ pipeline {
         	
         	post {
         	    
-        	    always {
-        	        mail to:"thiaggom@gmail.com"  
+        	    success {
+        	        mail to:"thiaggom@gmail.com", 
+        	        subject:"${currentBuild.fullDisplayName}", 
+        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."  
         	    }
 
         	}
@@ -42,17 +44,16 @@ pipeline {
 			
 			post {
 			    
-			    success{
-				    echo "Code successfully deployed to production!"
-			    }
+        	    success {
+        	        mail to:"thiaggom@gmail.com", 
+        	        subject:"${currentBuild.fullDisplayName}", 
+        	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"  
+        	    }
 			    
 			    failure{
 			        echo "Deploy failed!"
 			    }
 			    
-        	    always {
-        	        mail to:"thiaggom@gmail.com"  
-        	    }
 			}
 		                     
 		}
