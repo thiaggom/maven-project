@@ -37,7 +37,7 @@ pipeline {
 			parallel{
 				stage("Deploy to Stagging") {
 		        	steps {
-		        	    sh "cp **/target/*.war ${homol-server-folder}"
+		        	    sh "cp **/target/*.war ${params.homol-server-folder}"
 		        	}
 		        	post{
 		                success{
@@ -66,7 +66,7 @@ pipeline {
 		        	post {
 		        	    
 		        	    success {
-			        	    sh "cp **/target/*.war ${homol-server-folder}"
+			        	    sh "cp **/target/*.war ${params.prod-server-folder}"
 		        	        mail to:"thiaggom@gmail.com", 
 		        	        subject:"${currentBuild.fullDisplayName}", 
 		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
