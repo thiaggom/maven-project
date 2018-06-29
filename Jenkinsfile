@@ -60,13 +60,13 @@ pipeline {
                 		echo "put code to deploy to production..."                
 					    timeout( time:5, unit:"DAYS") {
 					    	input message: "Approve PRODUCTION deployment? "                     
-			        	    sh "cp **/target/*.war ${homol-server-folder}"
 					    }
 
 					}
 		        	post {
 		        	    
 		        	    success {
+			        	    sh "cp **/target/*.war ${homol-server-folder}"
 		        	        mail to:"thiaggom@gmail.com", 
 		        	        subject:"${currentBuild.fullDisplayName}", 
 		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
