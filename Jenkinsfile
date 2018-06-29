@@ -37,7 +37,7 @@ pipeline {
 			parallel{
 				stage("Deploy to Stagging") {
 		        	steps {
-		        	    sh "cp **/target/*.war ${params.homol-server-folder}"
+		        	    sh "cp **/target/*.war /apps/webapps-homol/"
 		        	}
 		        	post{
 		                success{
@@ -53,29 +53,28 @@ pipeline {
 		        	}
 				                     
 				}
-				
-				stage("Deploy to Production") {
 
-					steps {
-                		echo "put code to deploy to production..."                
-					    timeout( time:5, unit:"DAYS") {
-					    	input message: "Approve PRODUCTION deployment? "                     
-					    }
-
-					}
-		        	post {
-		        	    
-		        	    success {
-			        	    sh "cp **/target/*.war ${params.prod-server-folder}"
-		        	        mail to:"thiaggom@gmail.com", 
-		        	        subject:"${currentBuild.fullDisplayName}", 
-		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
-		 					echo "deploy successfully!"  
-		        	    }
-		
-		        	}
-
-				}
+//				stage("Deploy to Production") {
+//
+//					steps {
+//                		echo "put code to deploy to production..."                
+//					    timeout( time:5, unit:"DAYS") {
+//					    	input message: "Approve PRODUCTION deployment? "                     
+//					    }
+//
+//					}
+//		        	post {
+//		        	    
+//		        	    success {
+//			        	    sh "cp **/target/*.war ${params.prod-server-folder}"
+//		        	        mail to:"thiaggom@gmail.com", 
+//		        	        subject:"${currentBuild.fullDisplayName}", 
+//		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
+//		 					echo "deploy successfully!"  
+//		        	    }
+//		
+//		        	}
+//				}
  
 			    
 			}
