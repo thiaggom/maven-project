@@ -4,8 +4,8 @@ pipeline {
     
 	parameters{
 	    
-	    string(name: "homol-server", defaultValue: "tomcat-homol", description: "stagging environment to deploy java web application")
-	    string(name: "prod-server", defaultValue: "tomcat-prod", description: "production environment to deploy java web application")
+	    string(name: "homol-server-folder", defaultValue: "/apps/webapps-homol", description: "stagging environment to deploy java web application")
+	    string(name: "prod-server-folder", defaultValue: "/apps/webapps-prod", description: "production environment to deploy java web application")
 	    
 	}
 
@@ -18,11 +18,11 @@ pipeline {
         stage("build") {
             steps{
                 sh "mvn clean package"
-                archiveArtifacts artifacts: "**/target/*.war"
             }
             post {
 				success{
 					echo "Build completed with success!"               
+	                archiveArtifacts artifacts: "**/target/*.war"
 				}
 				failure{
 				    echo "build completed with erros. Check the build ${BUILD_NUMBER} logs."
@@ -37,7 +37,7 @@ pipeline {
 			parallel{
 				stage("Deploy to Stagging") {
 		        	steps {
-		        	    echo "deploy-to-staging"
+		        	    sh "cp **/target/*.war ${homol-server-folder}"
 		        	}
 		        	post{
 		                success{
@@ -58,6 +58,10 @@ pipeline {
 
 					steps {
                 		echo "put code to deploy to production..."                
+					    timeout( time:5, unit:"DAYS") {
+					    	input message: "Approve PRODUCTION deployment? "                     
+			        	    sh "cp **/target/*.war ${homol-server-folder}"
+					    }
 
 					}
 		        	post {
@@ -65,8 +69,8 @@ pipeline {
 		        	    success {
 		        	        mail to:"thiaggom@gmail.com", 
 		        	        subject:"${currentBuild.fullDisplayName}", 
-		        	        body: "Phase of the job complete! You must manually approve this build at the folloing url:${BUILD_URL} to deploy to production."
-							echo "Deploy to staging server finished successfully!"  
+		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
+		 					echo "deploy successfully!"  
 		        	    }
 		
 		        	}
@@ -78,35 +82,6 @@ pipeline {
 
                           
         }
-
-		stage("Deploy to Production") {
-		                     
-			steps {
-                    
-			    timeout( time:5, unit:"DAYS") {
-			    	input message: "Approve PRODUCTION deployment? "                     
-			    }
-
-				echo "deploy-to-prod"
-                    
-			}
-			
-			post {
-			    
-        	    success {
-        	        mail to:"thiaggom@gmail.com", 
-        	        subject:"${currentBuild.fullDisplayName}", 
-         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
- 					echo "deploy successfully!"  
-        	    }
-			    
-			    failure{
-			        echo "Deploy failed!"
-			    }
-			    
-			}
-		                     
-		}
 
 
     }
