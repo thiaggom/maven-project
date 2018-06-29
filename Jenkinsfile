@@ -53,29 +53,20 @@ pipeline {
 		        	}
 				                     
 				}
+				
+				stage("Deploy to Production") {
+				
+					steps{
+					    timeout(time:5, unit:"DAYS") {
+					    	input message: "Approved to PRODUCTION Deployment?"                    
+					    }
+						
+						sh "cp **/target/*.war /apps/webapps-prod/"
+					}
 
-//				stage("Deploy to Production") {
-//
-//					steps {
-//                		echo "put code to deploy to production..."                
-//					    timeout( time:5, unit:"DAYS") {
-//					    	input message: "Approve PRODUCTION deployment? "                     
-//					    }
-//
-//					}
-//		        	post {
-//		        	    
-//		        	    success {
-//			        	    sh "cp **/target/*.war ${params.prod-server-folder}"
-//		        	        mail to:"thiaggom@gmail.com", 
-//		        	        subject:"${currentBuild.fullDisplayName}", 
-//		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
-//		 					echo "deploy successfully!"  
-//		        	    }
-//		
-//		        	}
-//				}
- 
+				                     
+				}
+
 			    
 			}
 
