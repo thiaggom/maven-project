@@ -3,7 +3,7 @@ pipeline {
     
     environment {
 	    SONAR_HOST_URL = 'https://sonarcloud.io'
-		SONAR_AUTH_TOKEN = 'bbb238cfbceb5f90c7b13c923944f2698203a048'
+		SONAR_AUTH_TOKEN = credentials('sonar-token')
 		SONAR_ORGANIZATION= 'thiaggom-github'
     }
 
@@ -17,22 +17,33 @@ pipeline {
             steps {
             	deleteDir()
             	withMaven(maven:'default-maven') {
-		        	sh "mvn clean package sonar:sonar "+
+		        	sh "mvn clean package "+
 					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 					  "-Dsonar.host.url=${SONAR_HOST_URL}"+
 					  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
             	}
 			}
+			post{
+			    success{
+			        echo "build completed successfully!"
+			    }
+
+			}
+
         }
+/*
         stage("Quality Gate") {
             steps {
                 timeout(time: 1, unit: 'HOURS') {
+*/                
                     // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
                     // true = set pipeline to UNSTABLE, false = don't
                     // Requires SonarQube Scanner for Jenkins 2.7+
+  /*
                     waitForQualityGate abortPipeline: true
                 }
             }
         }
+*/        
     }
 }
