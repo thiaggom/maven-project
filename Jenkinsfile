@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    
+    environment {
+	    SONAR_HOST_URL = 'https://sonarcloud.io'
+		SONAR_AUTH_TOKEN = 'bbb238cfbceb5f90c7b13c923944f2698203a048'
+		SONAR_ORGANIZATION= 'thiaggom-github'
+    }
+
     stages {
         stage('SCM') {
             steps {
@@ -8,8 +15,11 @@ pipeline {
         }
         stage('build && SonarQube analysis') {
             steps {
-	        	sh 'mvn clean package sonar:sonar'
-            }
+	        	sh "mvn clean package sonar:sonar "+
+				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
+				  "-Dsonar.host.url=${SONAR_HOST_URL}"+
+				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
+			}
         }
         stage("Quality Gate") {
             steps {
