@@ -16,7 +16,7 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
             	//deleteDir()
-	        	sh "mvn clean package sonar:sonar"+
+	        	sh "mvn clean package sonar:sonar "+
 				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 				  "-Dsonar.host.url=${SONAR_HOST_URL}"+
 				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
