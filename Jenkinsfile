@@ -16,12 +16,10 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
             	deleteDir()
-            	withMaven(maven:'default-maven') {
-		        	sh "mvn clean package "+
-					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
-					  "-Dsonar.host.url=${SONAR_HOST_URL}"+
-					  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
-            	}
+	        	sh "mvn clean package "+
+				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
+				  "-Dsonar.host.url=${SONAR_HOST_URL}"+
+				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
 			}
 			post{
 			    success{
