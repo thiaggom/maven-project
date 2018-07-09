@@ -5,6 +5,7 @@ pipeline {
 	    SONAR_HOST_URL = 'https://sonarcloud.io'
 		SONAR_AUTH_TOKEN = credentials('sonar-token')
 		SONAR_ORGANIZATION= 'thiaggom-github'
+		SONAR_BRANCH_NAME = 'sonarteste'
     }
 
     stages {
@@ -16,10 +17,11 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
             	//deleteDir()
-	        	sh "mvn clean verify sonar:sonar "+
+	        	sh "mvn clean package sonar:sonar "+
 				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 				  "-Dsonar.host.url=${SONAR_HOST_URL} "+
-				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "            
+				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "+
+				  "-Dsonar.branch={SONAR_BRANCH_NAME}"            
 			}
 			post{
 			    success{
