@@ -1,5 +1,5 @@
 Hello, World! 
 
-new version deployed!
+<h1>Sonar Test!</h1>
 <br/>
-<b>Version 4.3</b>
+<b>Version 1.0</b>
