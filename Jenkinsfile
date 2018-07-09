@@ -21,7 +21,7 @@ pipeline {
 				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 				  "-Dsonar.host.url=${SONAR_HOST_URL} "+
 				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "+
-				  "-Dsonar.branch={SONAR_BRANCH_NAME}"            
+				  "-Dsonar.branch=${SONAR_BRANCH_NAME}"            
 			}
 			post{
 			    success{
