@@ -63,6 +63,15 @@ pipeline {
 						
 						sh "cp **/target/*.war /apps/webapps-prod/"
 					}
+					post{
+		        	    success {
+		        	        mail to:"thiaggom@gmail.com", 
+		        	        subject:"${currentBuild.fullDisplayName}", 
+		         	        body: "Deploy of build ${BUILD_NUMBER} was deployed to production successfully!"
+		 					echo "deploy successfully!"  
+		        	    }
+					    
+					}
 
 				                     
 				}
