@@ -17,11 +17,14 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
             	//deleteDir()
-	        	sh "mvn clean package sonar:sonar "+
-				  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
-				  "-Dsonar.host.url=${SONAR_HOST_URL} "+
-				  "-Dsonar.login=${SONAR_AUTH_TOKEN} "+
-				  "-Dsonar.branch=${SONAR_BRANCH_NAME}"            
+            	withSonarQubeEnv('SonarQube Server'){
+		        	sh "mvn clean package sonar:sonar "+
+					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
+					  "-Dsonar.host.url=${SONAR_HOST_URL} "+
+					  "-Dsonar.login=${SONAR_AUTH_TOKEN} "+
+					  "-Dsonar.branch=${SONAR_BRANCH_NAME}"            
+            	}
+
 			}
 			post{
 			    success{
