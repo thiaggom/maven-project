@@ -17,7 +17,7 @@ pipeline {
         stage('build && SonarQube analysis') {
             steps {
             	//deleteDir()
-            	withSonarQubeEnv('SonarQube Server'){
+            	withSonarQubeEnv('sonar-default'){
 		        	sh "mvn clean package sonar:sonar "+
 					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 					  "-Dsonar.host.url=${SONAR_HOST_URL} "+
