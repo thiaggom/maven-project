@@ -2,9 +2,9 @@ pipeline {
     agent any
     
     environment {
-	    SONAR_HOST_URL = 'https://sonarcloud.io'
+	    SONAR_HOST_URL = 'http://dev-servers:9000'
 		SONAR_AUTH_TOKEN = credentials('sonar-token')
-		SONAR_ORGANIZATION= 'thiaggom-github'
+//		SONAR_ORGANIZATION= 'thiaggom-github'
 		SONAR_BRANCH_NAME = 'sonarteste'
     }
 
@@ -19,7 +19,7 @@ pipeline {
             	//deleteDir()
             	withSonarQubeEnv('sonar-default'){
 		        	sh "mvn clean package sonar:sonar "+
-					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
+//					  "-Dsonar.organization=${SONAR_ORGANIZATION} "+
 					  "-Dsonar.host.url=${SONAR_HOST_URL} "+
 					  "-Dsonar.login=${SONAR_AUTH_TOKEN} "+
 					  "-Dsonar.branch=${SONAR_BRANCH_NAME}"            
@@ -46,6 +46,13 @@ pipeline {
                     waitForQualityGate abortPipeline: true
                 }
             }
+            post{
+                success{
+                    echo "Job was complete successfully!"
+                }
+
+            }
+
         }
         
     }
